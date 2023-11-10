@@ -62,7 +62,6 @@ const CreatePin = ( {user} ) => {
   const fieldsMissing = () =>
     !title || 
     !about || 
-    !destination || 
     !imageAsset?._id ||
     !category;
   
