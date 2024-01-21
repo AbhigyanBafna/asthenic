@@ -9,6 +9,8 @@ import { categories } from "../utils/data";
 
 const CreatePin = ( {user} ) => {
   const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
+
 
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
@@ -75,6 +77,8 @@ const CreatePin = ( {user} ) => {
   };
 
   const createPin = () => {
+    setLoading1(true)
+
     const doc = {
       _type: "pin",
       title,
@@ -98,13 +102,19 @@ const CreatePin = ( {user} ) => {
     client.create(doc)
       .then(() => {
       setTimeout(() => {
-        navigate("/"); // Create pin and navigate to home page
-      }, 3000);
+        setLoading1(false)
+        navigate("/");
+        window.location.reload(); // Create pin and navigate to home page
+      }, 5000);
     });
   };
 
   return (
     <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5">
+      {loading1 ? (
+        <Spinner />
+
+      ) : (<>
       {fields && (
         <p className="text-red-500 mb-5 text-xl transition-all duration-150 ease-in ">Please add all fields.</p>
       )}
@@ -228,6 +238,7 @@ const CreatePin = ( {user} ) => {
 
         </div>
       </div>
+      </>)}
     </div>
   )
 }
